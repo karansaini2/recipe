@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-const AddedRecipes = () => {
+const AddedRecipes = ({ isAuth }) => {
   const [recipes, setRecipes] = useState([]);
   const colRef = collection(db, "recipe");
   const navigate = useNavigate();
+
+  const deleteRecipe = async (id) => {
+    const postDoc = doc(db, "recipe", id);
+    await deleteDoc(postDoc);
+  };
 
   const submit = () => {
     navigate("/home");
@@ -95,10 +100,12 @@ const AddedRecipes = () => {
                 >
                   {recipe.recipiename}
                 </h3>
+                <h6>Recipe By : {recipe.author.name}</h6>
                 <h5
                   className="card-subtitle"
                   style={{
                     marginTop: "2px",
+                    color: "#D65A31",
                   }}
                 >
                   {recipe.ingredients}
@@ -112,6 +119,19 @@ const AddedRecipes = () => {
                 >
                   {recipe.preparation}
                 </p>
+                {isAuth && recipe.author.id === auth.currentUser.uid && (
+                  <button
+                    className="btn btn-danger"
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      deleteRecipe(recipe.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           );

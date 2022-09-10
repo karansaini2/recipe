@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./navbar";
 
 const AddedRecipes = ({ isAuth }) => {
   const [recipes, setRecipes] = useState([]);
@@ -30,6 +31,7 @@ const AddedRecipes = ({ isAuth }) => {
   }, [colRef]);
   return (
     <div className="added">
+      <Navbar />
       <h2
         style={{
           color: "#eeee",

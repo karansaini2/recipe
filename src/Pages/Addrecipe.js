@@ -3,6 +3,7 @@ import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { async } from "@firebase/util";
 import { useState } from "react";
+import Navbar from "./navbar";
 const AddRecipe = () => {
   const [recipiename, setRecipeName] = useState("");
   const [ingredients, setIngredients] = useState("");
@@ -24,6 +25,7 @@ const AddRecipe = () => {
   };
   return (
     <div className="add-form">
+      <Navbar />
       <h3
         style={{
           textAlign: "center",

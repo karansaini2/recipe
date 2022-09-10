@@ -1,30 +1,33 @@
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SignIn from "./Pages/SigIn";
-import Home from "./Pages/Home";
-import AddRecipe from "./Pages/Addrecipe";
-import AddedRecipes from "./Pages/Addedrecipes";
+import './App.css';
+import React from "react";
+import { BrowserRouter , Route } from "react-router-dom";
+import  SignIn from "./components/pages/SignIn";
+import Navbar from "./components/layout/Navbar";
+import Home from "./components/pages/Home";
+import DefaultPage from "./components/pages/DefaultPage";
+import Recipes from "./components/pages/Recipes";
+import RecipeDetails from "./components/pages/RecipeDetails";
 import { useState } from "react";
+
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+  const [setIsAuth] = useState(localStorage.getItem("isAuth"));
   return (
     <BrowserRouter>
       <div className="App">
-        <div className="routes">
-          <Routes>
+        <div className="route">
+          <Route>
+            <Navbar>
             <Route
               exact
               path="/"
               element={<SignIn setIsAuth={setIsAuth} />}
             ></Route>
             <Route exact path="/home" element={<Home />}></Route>
-            <Route exact path="/addrecipe" element={<AddRecipe />}></Route>
-            <Route
-              exact
-              path="/addedrecipe"
-              element={<AddedRecipes isAuth={isAuth} />}
-            ></Route>
-          </Routes>
+            <Route exact path="/recipes" element={<Recipes />}></Route>
+            <Route exact path="/recipes/:recipe_id" element={<RecipeDetails />}></Route>
+            <Route element={DefaultPage} />
+            </Navbar>
+          </Route>
         </div>
       </div>
     </BrowserRouter>
